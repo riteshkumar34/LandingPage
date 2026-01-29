@@ -79,11 +79,16 @@ body::before {
 /* Navigation - Frame 112: Horizontal, gap 48px, Hug 15px */
 .nav {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 48px;
-  height: fit-content;
+
+  padding: 14px 28px;
+  border-radius: 999px;
+
+  border: 1.5px solid rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.05);
 }
+
 
 .nav a {
   color: #e5e5e5;
