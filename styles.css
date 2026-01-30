@@ -33,16 +33,24 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   width: 100%;
   height: 120px;
   padding: 0 2rem;
+
   background: linear-gradient(180deg, #020101 0%, #020101 100%);
+  border-bottom: 1.5px solid rgba(255,255,255,0.35);
+
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
-  border-bottom: 1.5px solid rgba(255,255,255,0.35);
+
+  /* 🔑 FIX: header stays above content, but not body bg */
+  z-index: 10;
+
+  /* 🔑 FIX: prevent backdrop-filter stacking bugs */
+  isolation: isolate;
 }
 
 /* Logo */
@@ -67,21 +75,18 @@ body {
   letter-spacing: 0.02em;
 }
 
-/* Navigation - Frame 112: Horizontal, gap 48px, Hug 15px */
+/* Navigation */
 .nav {
   display: inline-flex;
   align-items: center;
   gap: 48px;
 
-  /* 🔥 IMPORTANT: space so border is visible */
   padding: 16px 32px;
   min-height: 56px;
 
   border-radius: 999px;
-
   background: transparent;
 }
-
 
 .nav a {
   color: #e5e5e5;
@@ -96,23 +101,29 @@ body {
   color: #fff;
 }
 
-/* CTA – 172×80 pill, glassy (frosted + blur + highlight) */
+/* CTA */
 .btn-cta {
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 172px;
   height: 80px;
   padding: 0 16px;
+
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 999px;
+
   background: rgba(255, 255, 255, 0.06);
+
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+
   color: #fff;
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
+
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 1px 2px rgba(0, 0, 0, 0.2);
@@ -126,6 +137,7 @@ body {
     0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+
 /* ========== HERO ========== */
 .hero {
   padding-top: 120px;
@@ -138,7 +150,7 @@ body {
   gap: 1.25rem;
 }
 
-/* Pill: Talk. Reflect. Understand. (Frame 252) – upper, header ke kareeb (2 inch upper) */
+/* Pill */
 .hero-tag {
   display: inline-flex;
   align-items: center;
@@ -157,7 +169,7 @@ body {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-/* Qyuro talking orb – 527×404, centered */
+/* Orb */
 .hero-orb {
   display: block;
   width: 527px;
@@ -167,7 +179,7 @@ body {
   margin-top: -6rem;
 }
 
-/* Main heading – Plus Jakarta Sans, 72px, weight 500, line-height 100%, width 663px */
+/* Title */
 .hero-title {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 72px;
@@ -175,46 +187,48 @@ body {
   text-align: center;
   color: #fff;
   line-height: 100%;
-  letter-spacing: 0;
   max-width: 663px;
   margin-top: -9.5rem;
 }
 
-/* Sub-headline – Poppins, 20px, weight 500, line-height 141%, width 801px */
+/* Subtitle */
 .hero-sub {
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 20px;
   font-weight: 500;
   text-align: center;
-  color: #ffffff;
+  color: #fff;
   line-height: 141%;
-  letter-spacing: 0;
   max-width: 801px;
 }
 
-/* App store badges */
+/* Badges wrapper */
 .hero-badges {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
 }
 
+/* 🔥 IMPORTANT PART – Figma-like brightness */
 .hero-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  filter: brightness(1.7) contrast(1.35);
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .hero-badge:hover {
-  opacity: 0.85;
   transform: translateY(-2px);
+  filter: brightness(1.45) contrast(1.25);
 }
 
+/* Badge image */
 .hero-badge-img {
   display: block;
   height: 60px;
@@ -885,131 +899,6 @@ body {
   }
 }
 
-
-/* ========== QYURO.CITY (ANIMATED ORB) ========== */
-/* ========== QYURO.CITY — CHARCOAL SMOKE ORB ========== */
-
-.qyuro-city {
-  width: 100%;
-  min-height: 80vh;
-  padding: 6rem 0;
-  background: #0b0b0b; /* 🔥 not pure black */
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-/* --- charcoal smoke core --- */
-.qyuro-city::before {
-  content: "";
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at 42% 38%,
-      rgba(240,240,240,0.65),
-      rgba(200,200,200,0.45) 28%,
-      rgba(150,150,150,0.28) 45%,
-      rgba(80,80,80,0.35) 60%,
-      rgba(25,25,25,0.85) 78%,
-      rgba(12,12,12,1) 100%
-    );
-
-  filter: blur(18px);
-  opacity: 0.9;
-
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: charcoalBreath 18s ease-in-out infinite;
-
-  z-index: 0;
-}
-
-/* --- flowing charcoal waves --- */
-.qyuro-city::after {
-  content: "";
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(220,220,220,0.7),
-      rgba(220,220,220,0.7) 1px,
-      rgba(140,140,140,0.35) 3px,
-      rgba(40,40,40,0.2) 6px
-    );
-
-  mask-image:
-    radial-gradient(circle, #fff 55%, rgba(255,255,255,0.25) 65%, transparent 78%);
-  -webkit-mask-image:
-    radial-gradient(circle, #fff 55%, rgba(255,255,255,0.25) 65%, transparent 78%);
-
-  opacity: 0.55;
-  filter: blur(1.2px);
-
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation:
-    charcoalSpin 32s linear infinite,
-    charcoalWarp 12s ease-in-out infinite alternate;
-
-  z-index: 0;
-}
-
-/* --- content stays crisp --- */
-.qyuro-city-content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-
-  max-width: 800px;
-  padding: 0 2rem;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-/* --- animations --- */
-@keyframes charcoalSpin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to   { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes charcoalBreath {
-  0%   { transform: translate(-50%, -50%) scale(1); }
-  50%  { transform: translate(-50%, -50%) scale(1.05); }
-  100% { transform: translate(-50%, -50%) scale(1); }
-}
-
-@keyframes charcoalWarp {
-  0%   { filter: blur(1px); }
-  100% { filter: blur(3px); }
-}
-
-/* --- responsive --- */
-@media (max-width: 600px) {
-  .qyuro-city::before,
-  .qyuro-city::after {
-    width: 380px;
-    height: 380px;
-  }
-}
-
 /* ========== INNER SIGNS SECTION ========== */
 .inner-signs {
   width: 100%;
@@ -1164,6 +1053,101 @@ body {
     min-width: unset;
   }
 }
+
+
+/* ===== QYURO CITY VIDEO SECTION ===== */
+
+.qyuro-city {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+
+  /* fallback while video loads */
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  /* 🔑 ensure section never collapses */
+  isolation: isolate;
+}
+
+/* video wrapper fills section */
+.qyuro-city-video-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 0;
+}
+
+/* actual video */
+.qyuro-city-video {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  display: block;
+
+  /* 🔑 IMPORTANT: do NOT disable pointer events */
+  pointer-events: auto;
+}
+
+/* dark overlay for readability */
+.qyuro-city-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.35)
+  );
+
+  z-index: 1;
+}
+
+/* content above video */
+.qyuro-city-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 800px;
+  padding: 0 2rem;
+
+  text-align: center;
+  color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* text polish */
+.qyuro-city-title-inner,
+.qyuro-city-headline,
+.qyuro-city-sub,
+.qyuro-city-desc {
+  text-shadow:
+    0 6px 40px rgba(0, 0, 0, 0.75),
+    0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .qyuro-city {
+    min-height: 70vh;
+  }
+}
+
 
 /* ========== FAQs SECTION ========== */
 .faqs {
@@ -1449,3 +1433,4 @@ body {
     border-radius: 20px;
   }
 }
+
